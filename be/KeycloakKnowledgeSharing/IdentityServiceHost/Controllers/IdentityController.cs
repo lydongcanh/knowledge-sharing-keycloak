@@ -21,6 +21,6 @@ public class IdentityController : ControllerBase
         using var client = new HttpClient();
         var response = await client.PostAsync(url, new FormUrlEncodedContent(data));
     
-        return Ok(await response.Content.ReadFromJsonAsync<AccessToken>());;
+        return Ok(await response.Content.ReadFromJsonAsync<AccessToken>());
     }
 }

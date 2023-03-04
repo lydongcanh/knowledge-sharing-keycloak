@@ -1,28 +1,33 @@
+using Hangfire;
+using Hangfire.PostgreSql;
 using Shared.ServiceConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Services.
+var services = builder.Services;
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwagger();
-builder.Services.AddAuth();
+services.AddControllers();
+services.AddEndpointsApiExplorer();
+services.AddSwagger();
+services.AddAuth();
 
+services
+    .AddHangfire(config => config.UsePostgreSqlStorage(builder.Configuration.GetConnectionString("HangfireConnection")))
+    .AddHangfireServer();
+
+// App
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseHangfireDashboard();
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();
