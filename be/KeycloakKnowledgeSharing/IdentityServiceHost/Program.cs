@@ -1,4 +1,4 @@
-using Shared.ServiceConfiguration;
+using Core.ServiceConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 

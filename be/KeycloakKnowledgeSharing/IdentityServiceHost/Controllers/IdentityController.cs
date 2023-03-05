@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Shared.Dto;
+using Core.Dto;
 
 namespace IdentityServiceHost.Controllers;
 
