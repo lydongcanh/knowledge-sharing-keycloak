@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace Core.ServiceConfiguration;
+namespace Shared.ServiceConfiguration;
 
 public static class SwaggerConfigurations
 {

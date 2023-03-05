@@ -1,6 +1,6 @@
 using Hangfire;
 using Hangfire.PostgreSql;
-using Core.ServiceConfiguration;
+using Shared.ServiceConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 

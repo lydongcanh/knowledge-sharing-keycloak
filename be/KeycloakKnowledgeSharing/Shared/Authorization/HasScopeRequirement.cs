@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 
-namespace Core.Authorization;
+namespace Shared.Authorization;
 
 public class HasScopeRequirement : IAuthorizationRequirement
 {

@@ -1,9 +1,9 @@
-using Core.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Authorization;
 
-namespace Core.ServiceConfiguration;
+namespace Shared.ServiceConfiguration;
 
 public static class AuthConfigurations
 {

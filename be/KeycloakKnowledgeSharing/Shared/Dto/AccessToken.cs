@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
-namespace Core.Dto;
+namespace Shared.Dto;
 
 public record AccessToken(
     [property: JsonProperty("access_token")]

@@ -1,5 +1,7 @@
+using System.Security.Claims;
+using IdentityServiceHost.Application;
 using Microsoft.AspNetCore.Mvc;
-using Core.Dto;
+using Shared.Dto;
 
 namespace IdentityServiceHost.Controllers;
 
