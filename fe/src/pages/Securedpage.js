@@ -25,13 +25,9 @@ export default function SecuredPage() {
             })
     }, []);
 
-    if (authenticated) {
-        return <div>Authenticated {keycloak.token}</div>;
+    if (!authenticated) {
+        return <h1>Not Authenticated</h1>;
     }
 
-    return (
-        <div>
-            <h1>Not Authenticated</h1>
-        </div>
-    );
+    return <a title="User profile" href="http://localhost:8080/realms/dev/account/#/personal-info">User profile</a>;
 };
