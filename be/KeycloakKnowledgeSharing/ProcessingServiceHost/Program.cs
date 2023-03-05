@@ -25,7 +25,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHangfireDashboard();
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    AppPath = null
+});
 app.UseHttpsRedirection();
 app.UseAuthorization();
 
