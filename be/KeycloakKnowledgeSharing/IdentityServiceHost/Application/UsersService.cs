@@ -6,21 +6,27 @@ namespace IdentityServiceHost.Application;
 public class UsersService : IUsersService
 {
     private readonly IKeycloakApis _keycloakApis;
-
-    public UsersService(IKeycloakApis keycloakApis)
+    private readonly IProfileIndexRepository _profileIndexRepository;
+    
+    public UsersService(IKeycloakApis keycloakApis, IProfileIndexRepository profileIndexRepository)
     {
         _keycloakApis = keycloakApis;
+        _profileIndexRepository = profileIndexRepository;
     }
     
     public async Task CreateUserAsync(KeycloakUser request)
     {
+        var globalProfileId = Guid.NewGuid();
+
         const string globalProfileIdKey = "GlobalProfileId";
         if (!request.Attributes.ContainsKey(globalProfileIdKey))
         {
-            request.Attributes.Add(globalProfileIdKey, Guid.NewGuid().ToString("N"));
+            request.Attributes.Add(globalProfileIdKey, globalProfileId.ToString());
         }
         
-        await _keycloakApis.CreateUserAsync(request);
+        await Task.WhenAll(
+            _keycloakApis.CreateUserAsync(request),
+            _profileIndexRepository.CreateProfileIndexAsync(new ProfileIndex(request.Email.ToUpperInvariant(), globalProfileId)));
     }
 
     public async Task<KeycloakUser?> GetUserByEmailAsync(string email)

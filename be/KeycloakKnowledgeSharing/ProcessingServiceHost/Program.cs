@@ -16,6 +16,13 @@ services
     .AddHangfire(config => config.UsePostgreSqlStorage(builder.Configuration.GetConnectionString("HangfireConnection")))
     .AddHangfireServer();
 
+services.AddCors(options => options.AddPolicy("OpenCorsPolicy", corsPolicyBuilder =>
+{
+    corsPolicyBuilder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+}));
+
 // App
 var app = builder.Build();
 
@@ -29,7 +36,11 @@ app.UseHangfireDashboard("/hangfire", new DashboardOptions
 {
     AppPath = null
 });
+
+app.UseCors("OpenCorsPolicy");
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

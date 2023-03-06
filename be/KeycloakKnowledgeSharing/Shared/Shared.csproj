@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.14" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.14" />
       <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="6.0.14" />
       <PackageReference Include="Microsoft.OpenApi" Version="1.6.2" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3-beta1" />

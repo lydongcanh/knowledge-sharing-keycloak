@@ -9,12 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Services
 var services = builder.Services;
 
+services.AddRouting();
 services.AddControllers();
 services.AddEndpointsApiExplorer();
-services.AddSwagger();
 services.AddAuth();
+services.AddSwagger();
 
-services.AddSingleton(_ => RestService.For<IKeycloakApis>("http://localhost:8080/admin/realms/dev", new RefitSettings()
+services.AddSingleton(_ => RestService.For<IKeycloakApis>("http://localhost:8080/admin/realms/dev", new RefitSettings
 {
     AuthorizationHeaderValueGetter = async () =>
     {
@@ -34,20 +35,23 @@ services.AddSingleton(_ => RestService.For<IKeycloakApis>("http://localhost:8080
 }));
 
 services.AddSingleton<IUsersService, UsersService>();
+services.AddSingleton<IProfileIndexRepository>(_ =>
+    new ProfileIndexRepository(builder.Configuration.GetConnectionString("IdentityConnection")));
 
 // App
 var app = builder.Build();
+
+app.UseHttpsRedirection();
+
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseEndpoints(routeBuilder => routeBuilder.MapControllers());
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();

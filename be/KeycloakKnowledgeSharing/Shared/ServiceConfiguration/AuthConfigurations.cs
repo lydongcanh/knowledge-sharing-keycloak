@@ -14,16 +14,15 @@ public static class AuthConfigurations
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options =>
+        }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
         {
             options.Authority = domain;
-            options.Audience = "account";
             options.RequireHttpsMetadata = false;
         });
 
         services.AddAuthorization(options =>
         {
-            options.AddPolicy("be00:master", policy => policy.Requirements.Add(new HasScopeRequirement("be00:master", domain)));
+            options.AddPolicy("identity:users:create", policy => policy.Requirements.Add(new HasScopeRequirement("identity:users:create", domain)));
         });
             
         services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
